@@ -95,6 +95,7 @@ resource "azurerm_windows_virtual_machine" "main" {
   source_image_reference {
     publisher = "MicrosoftWindowsServer"
     offer     = "WindowsServer"
+    sku       = "2025-datacenter-azure-edition"
     sku       = "2022-datacenter-azure-edition"
     version   = "latest"
   }
@@ -103,4 +104,17 @@ resource "azurerm_windows_virtual_machine" "main" {
   patch_mode               = "AutomaticByOS"
 
   tags = var.tags
+}
+
+
+resource "azurerm_virtual_machine_extension" "azure_arc" {
+  count                = var.install_azure_arc_agent ? 1 : 0
+  name                 = "AzureConnectedMachineAgent"
+  virtual_machine_id   = azurerm_windows_virtual_machine.main.id
+  publisher            = "Microsoft.Azure.ConnectedMachine"
+  type                 = "WindowsAgent.AzureConnectedMachine"
+  type_handler_version = "1.0"
+
+  auto_upgrade_minor_version = true
+  tags                       = var.tags
 }

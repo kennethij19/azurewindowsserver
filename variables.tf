@@ -1,12 +1,20 @@
 variable "location" {
   description = "Azure region where resources will be created."
   type        = string
+  default     = "Sweden Central"
   default     = "East US"
 }
 
 variable "resource_group_name" {
   description = "Name of the resource group to create."
   type        = string
+  default     = "rg-winserver-se-demo"
+}
+
+variable "install_azure_arc_agent" {
+  description = "Install Azure Arc Connected Machine agent on the Windows VM."
+  type        = bool
+  default     = true
   default     = "rg-winserver-demo"
 }
 
