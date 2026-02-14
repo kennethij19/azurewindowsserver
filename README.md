@@ -43,7 +43,6 @@ Customize values in `terraform.tfvars` (example):
 
 ```hcl
 location            = "Sweden Central"
-location            = "East US"
 resource_group_name = "rg-winserver-prod"
 vm_name             = "win-prod-01"
 admin_username      = "azureadmin"
