@@ -100,7 +100,8 @@ resource "azurerm_windows_virtual_machine" "main" {
   }
 
   enable_automatic_updates = true
-  patch_mode               = "AutomaticByOS"
+  patch_mode               = "AutomaticByPlatform"
+  bypass_platform_safety_checks_on_user_schedule_enabled = true
 
   tags = var.tags
 }
