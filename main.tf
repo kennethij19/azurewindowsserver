@@ -103,18 +103,29 @@ resource "azurerm_windows_virtual_machine" "main" {
   patch_mode               = "AutomaticByPlatform"
   bypass_platform_safety_checks_on_user_schedule_enabled = true
 
+  identity {
+    type = "SystemAssigned"
+  }
+
   tags = var.tags
 }
 
-
-resource "azurerm_virtual_machine_extension" "azure_arc" {
-  count                = var.install_azure_arc_agent ? 1 : 0
-  name                 = "AzureConnectedMachineAgent"
-  virtual_machine_id   = azurerm_windows_virtual_machine.main.id
-  publisher            = "Microsoft.Azure.ConnectedMachine"
-  type                 = "WindowsAgent.AzureConnectedMachine"
-  type_handler_version = "1.0"
-
+resource "azurerm_virtual_machine_extension" "entra_login" {
+  count                      = var.enable_entra_login ? 1 : 0
+  name                       = "AADLoginForWindows"
+  virtual_machine_id         = azurerm_windows_virtual_machine.main.id
+  publisher                  = "Microsoft.Azure.ActiveDirectory"
+  type                       = "AADLoginForWindows"
+  type_handler_version       = "2.0"
   auto_upgrade_minor_version = true
   tags                       = var.tags
+}
+
+data "azurerm_client_config" "current" {}
+
+resource "azurerm_role_assignment" "vm_admin_login" {
+  count                = var.enable_entra_login ? 1 : 0
+  scope                = azurerm_windows_virtual_machine.main.id
+  role_definition_name = "Virtual Machine Administrator Login"
+  principal_id         = data.azurerm_client_config.current.object_id
 }
