@@ -10,10 +10,10 @@ variable "resource_group_name" {
   default     = "rg-winserver-se-demo"
 }
 
-variable "install_azure_arc_agent" {
-  description = "Install Azure Arc Connected Machine agent on the Windows VM."
+variable "enable_entra_login" {
+  description = "Enable Microsoft Entra ID (Azure AD) authentication for RDP login."
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "vm_name" {
