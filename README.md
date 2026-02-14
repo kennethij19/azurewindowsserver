@@ -9,7 +9,6 @@ This Terraform configuration provisions a Windows Server VM in Azure with:
 - Network interface
 - Windows Server 2025 VM
 - Azure Arc Connected Machine agent installed by default
-- Windows Server 2022 VM
 - Randomly generated local admin password
 
 ## Prerequisites
@@ -44,7 +43,6 @@ Customize values in `terraform.tfvars` (example):
 
 ```hcl
 location            = "Sweden Central"
-location            = "East US"
 resource_group_name = "rg-winserver-prod"
 vm_name             = "win-prod-01"
 admin_username      = "azureadmin"
