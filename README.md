@@ -8,7 +8,6 @@ This Terraform configuration provisions a Windows Server VM in Azure with:
 - Network Security Group allowing RDP (3389)
 - Network interface
 - Windows Server 2025 VM
-- Azure Arc Connected Machine agent installed by default
 - Randomly generated local admin password
 
 ## Prerequisites
